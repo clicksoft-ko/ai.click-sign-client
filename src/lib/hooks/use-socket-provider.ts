@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { useSocketStore } from '../stores/use-socket-store';
 
 export const useSocketProvider = () => {
-  const { setSocket, setConnected } = useSocketStore();
+  const { socket: _socket, setSocket, setConnected } = useSocketStore();
 
   useEffect(() => {
     const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL!, {
@@ -24,7 +24,6 @@ export const useSocketProvider = () => {
     return () => {
       socket.off('connect', handleConnect);
       socket.on('disconnect', handleDisconnect);
-      setSocket(null);
     };
   }, [setConnected, setSocket]);
 };

@@ -1,5 +1,5 @@
 import { SignConfirmProps } from '@/lib/props/sign-confirm.prop';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useSocketIo from './use-socket-io';
 import { ISock, ToWeb, ToWindow } from '../../app/classes/sock-model';
 import { Html2CanvasManager } from '@/lib/html2canvas/html2canvas-manager';
@@ -40,31 +40,34 @@ export const useRemote = () => {
     },
   });
 
-  async function emit({
-    buffer,
-    toWindow,
-  }: {
-    buffer?: Buffer;
-    toWindow: ToWindow;
-  }) {
-    const compressedBuffer = buffer && pako.gzip(buffer!);
-    const sock: ISock = {
-      room: socketPath!.toRoom,
-      image: compressedBuffer,
-      toWindow: toWindow,
-    };
+  const emit = useCallback(
+    async ({ buffer, toWindow }: { buffer?: Buffer; toWindow: ToWindow }) => {
+      const compressedBuffer = buffer && pako.gzip(buffer!);
+      const sock: ISock = {
+        room: socketPath!.toRoom,
+        image: compressedBuffer,
+        toWindow: toWindow,
+      };
 
-    return await socket!.emitWithAck(SocketPathUtil.emitEv, sock);
-  }
+      return await socket!.emitWithAck(SocketPathUtil.emitEv, sock);
+    },
+    [socketPath, socket]
+  );
 
-  function handleSignChange(buffer?: Buffer): void {
-    emit({ buffer, toWindow: ToWindow.서명중 });
-  }
+  const handleSignChange = useCallback(
+    (buffer?: Buffer) => {
+      emit({ buffer, toWindow: ToWindow.서명중 });
+    },
+    [emit]
+  );
 
-  function handleConfirmSign(buffer?: Buffer): void {
-    setShowSign(false);
-    emit({ buffer, toWindow: ToWindow.서명완료 });
-  }
+  const handleConfirmSign = useCallback(
+    (buffer?: Buffer) => {
+      setShowSign(false);
+      emit({ buffer, toWindow: ToWindow.서명완료 });
+    },
+    [emit, setShowSign]
+  );
 
   useEffect(() => {
     const canvasM = new Html2CanvasManager();
@@ -72,21 +75,29 @@ export const useRemote = () => {
     async function callTimer() {
       if (isImageEmpty) {
         abortController?.abort();
-        const result = await emit({ toWindow: ToWindow.화면초기화 });
-        if (!result) clear();
+        try {
+          const result = await emit({ toWindow: ToWindow.화면초기화 });
+          if (!result) clear();
+        } catch (error: any) {
+          console.error('Error during emit:', error.message);
+        }
         return;
       }
 
       abortController = new AbortController();
       timer = setInterval(async () => {
-        const buffer = await canvasM.getBuffer(
-          mainRef.current!,
-          abortController.signal
-        );
+        try {
+          const buffer = await canvasM.getBuffer(
+            mainRef.current!,
+            abortController.signal
+          );
 
-        if (buffer) {
-          const result = await emit({ buffer, toWindow: ToWindow.화면공유 });
-          if (!result) clear();
+          if (buffer) {
+            const result = await emit({ buffer, toWindow: ToWindow.화면공유 });
+            if (!result) clear();
+          }
+        } catch (error: any) {
+          console.error('Error during getBuffer or emit:', error.message);
         }
       }, 500);
     }
@@ -94,9 +105,9 @@ export const useRemote = () => {
     callTimer().catch((error: any) => console.log(error.message));
 
     return () => {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
     };
-  }, [isImageEmpty]);
+  }, [emit, isImageEmpty]);
 
   return {
     imageData,
