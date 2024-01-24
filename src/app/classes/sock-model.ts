@@ -1,3 +1,5 @@
+import pako from 'pako';
+
 export interface ISock {
   room: string;
   image?: ArrayBuffer;
@@ -20,7 +22,8 @@ export class SockModel implements ISock {
 
   get imageBuffer() {
     if (!this.image) return;
-    return Buffer.from(this.image);
+    const buffer = Buffer.from(this.image);
+    return Buffer.from(pako.ungzip(buffer));
   }
 
   // getObjectUrl() {

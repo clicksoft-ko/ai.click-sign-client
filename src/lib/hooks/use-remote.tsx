@@ -5,6 +5,7 @@ import { ISock, ToWeb, ToWindow } from '../../app/classes/sock-model';
 import { Html2CanvasManager } from '@/lib/html2canvas/html2canvas-manager';
 import { SocketPathUtil } from '@/lib/utils/socket-path.util';
 import { useSocketStore } from '../stores/use-socket-store';
+import pako from 'pako';
 
 let abortController: AbortController;
 
@@ -46,9 +47,10 @@ export const useRemote = () => {
     buffer?: Buffer;
     toWindow: ToWindow;
   }) {
+    const compressedBuffer = buffer && pako.gzip(buffer!);
     const sock: ISock = {
       room: socketPath!.toRoom,
-      image: buffer,
+      image: compressedBuffer,
       toWindow: toWindow,
     };
 

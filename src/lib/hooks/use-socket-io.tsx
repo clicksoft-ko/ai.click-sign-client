@@ -12,13 +12,11 @@ const useSocketIo = ({ onReceive }: UseSocketIoArgs) => {
   useEffect(() => {
     function handleOrders(data: any, callback: any): void {
       const sock = new SockData(data);
-      onReceive(sock);
-
       callback?.(true);
+      onReceive(sock);
     }
 
     socket?.on(SocketPathUtil.ev, handleOrders);
-
     return () => {
       socket?.off(SocketPathUtil.ev, handleOrders);
     };
