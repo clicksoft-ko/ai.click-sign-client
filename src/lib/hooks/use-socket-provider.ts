@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { useSocketStore } from '../stores/use-socket-store';
 
 export const useSocketProvider = () => {
-  const { socket: _socket, setSocket, setConnected } = useSocketStore();
+  const { setSocket, setConnected } = useSocketStore();
 
   useEffect(() => {
     const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL!, {

@@ -11,8 +11,10 @@ export default function MainPage() {
       <Button onClick={() => setVisibleImage((prev) => !prev)}>
         이미지 토글
       </Button>
-      {visibleImage && <Image src='/images/bigimage.bmp' alt='..' width={4000} height={4000} />}
-      <SignCanvas onSignChanged={() => { }} onConfirm={() => { }} />
+      {visibleImage && (
+        <Image src='/images/bigimage.bmp' alt='..' width={4000} height={4000} />
+      )}
+      <SignCanvas />
     </div>
   );
 }

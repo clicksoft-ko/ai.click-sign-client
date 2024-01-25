@@ -5,15 +5,8 @@ import { SignCanvas } from '../sign-canvas';
 import { useSocketStore } from '@/lib/stores/use-socket-store';
 
 export default function RemoteSign() {
-  const { socketPath } = useSocketStore();
-  const {
-    imageSrc,
-    showSign,
-    signRef,
-    mainRef,
-    handleSignChange,
-    handleConfirmSign,
-  } = useRemote();
+  const { socketPath, showSign } = useSocketStore();
+  const { imageSrc, signRef, mainRef } = useRemote();
 
   if (!socketPath) return <></>;
 
@@ -39,13 +32,7 @@ export default function RemoteSign() {
         />
       )}
 
-      {showSign && (
-        <SignCanvas
-          ref={signRef}
-          onSignChanged={handleSignChange}
-          onConfirm={handleConfirmSign}
-        />
-      )}
+      {showSign && <SignCanvas ref={signRef} />}
     </div>
   );
 }

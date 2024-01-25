@@ -9,39 +9,47 @@ import React, {
 import ReactSignatureCanvas from 'react-signature-canvas';
 import SignatureCanvas from 'react-signature-canvas';
 import { Button } from './ui/button';
+import { useSocketHandler } from '@/lib/hooks/use-socket-handler';
 
-interface Props extends SignConfirmProps {
-  signRef?: React.RefObject<ReactSignatureCanvas>;
-  onSignChanged: (buffer?: Buffer) => void;
-}
+interface Props { }
 
 const SignCanvas = React.forwardRef<SignConfirmProps, Props>(
-  ({ onConfirm, onSignChanged }: Props, ref) => {
+  ({ }: Props, ref) => {
+    const { emitSignChange, emitConfirmSign } = useSocketHandler();
     const signRef = useRef<ReactSignatureCanvas>(null);
     const [isDrawing, setIsDrawing] = useState(false);
+
     function handleRewrite(): void {
       signRef?.current?.clear();
-      onSignChanged(undefined);
+      emitSignChange(undefined);
     }
 
     const getSignBuffer = useCallback(() => {
-      if (!signRef.current) {
-        return;
-      }
+      if (!signRef.current) return;
+
       const dataURL = signRef.current.toDataURL();
       const buffer = Buffer.from(dataURL.split(',')[1], 'base64');
       return buffer;
     }, []);
 
-    const handleSignChange = useCallback(() => {
-      const buffer = getSignBuffer();
-      onSignChanged(buffer);
-    }, [getSignBuffer, onSignChanged]);
-
     const handleConfirm = useCallback(() => {
       const buffer = getSignBuffer();
-      onConfirm(buffer);
-    }, [getSignBuffer, onConfirm]);
+      emitConfirmSign(buffer);
+    }, [emitConfirmSign, getSignBuffer]);
+
+    const handleSignChange = useCallback(() => {
+      const buffer = getSignBuffer();
+      emitSignChange(buffer);
+    }, [emitSignChange, getSignBuffer]);
+
+    function handleBeginSign() {
+      setIsDrawing(true);
+    }
+
+    function handleEndSign() {
+      setIsDrawing(false);
+      setTimeout(handleSignChange, 200);
+    }
 
     useImperativeHandle(
       ref,
@@ -53,12 +61,11 @@ const SignCanvas = React.forwardRef<SignConfirmProps, Props>(
 
     useEffect(() => {
       if (!isDrawing) return;
+
       const timer = setInterval(() => {
         handleSignChange();
-      }, 50);
-      return () => {
-        clearInterval(timer);
-      };
+      }, 200);
+      return () => clearInterval(timer);
     }, [handleSignChange, isDrawing]);
 
     return (
@@ -83,11 +90,8 @@ const SignCanvas = React.forwardRef<SignConfirmProps, Props>(
         <SignatureCanvas
           minWidth={3}
           maxWidth={5}
-          onBegin={() => setIsDrawing(true)}
-          onEnd={() => {
-            setIsDrawing(false);
-            setTimeout(handleSignChange, 100);
-          }}
+          onBegin={handleBeginSign}
+          onEnd={handleEndSign}
           ref={signRef}
           penColor='black'
           canvasProps={{
