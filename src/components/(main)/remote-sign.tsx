@@ -7,7 +7,7 @@ import { useSocketStore } from '@/lib/stores/use-socket-store';
 export default function RemoteSign() {
   const { socketPath } = useSocketStore();
   const {
-    imageData,
+    imageSrc,
     showSign,
     signRef,
     mainRef,
@@ -19,10 +19,10 @@ export default function RemoteSign() {
 
   return (
     <div className='h-full w-full overflow-hidden' ref={mainRef}>
-      {imageData ? (
+      {imageSrc ? (
         <div className='m-4'>
           <Image
-            src={imageData!}
+            src={imageSrc}
             alt='폼 이미지'
             width={1000}
             height={1000}

@@ -1,29 +1,30 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SocketPathUtil } from '../utils/socket-path.util';
-import { SockModel as SockData } from '@/app/classes/sock-model';
+import {
+  ISock,
+  SockModel as SockData,
+  SockModel,
+} from '@/app/classes/sock-model';
 import { useSocketStore } from '../stores/use-socket-store';
 
 interface UseSocketIoArgs {
-  onReceive: (data: SockData) => void;
+  onReceive: (data: SockModel) => void;
 }
 
 const useSocketIo = ({ onReceive }: UseSocketIoArgs) => {
   const { socket } = useSocketStore();
-  const handleOrders = useCallback(
-    (data: any, callback: any) => {
-      const sock = new SockData(data);
-      callback?.(true);
-      onReceive(sock);
-    },
-    [onReceive]
-  );
-
   useEffect(() => {
+    const handleOrders = async (data: ISock, callback: any) => {
+      await callback?.(true);
+      const sock = new SockData(data);
+      onReceive(sock);
+    };
+
     socket?.on(SocketPathUtil.ev, handleOrders);
     return () => {
       socket?.off(SocketPathUtil.ev, handleOrders);
     };
-  }, [socket, handleOrders]);
+  }, [onReceive, socket]);
 
   return { socket };
 };

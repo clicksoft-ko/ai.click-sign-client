@@ -26,17 +26,17 @@ export class SockModel implements ISock {
     return Buffer.from(pako.ungzip(buffer));
   }
 
-  // getObjectUrl() {
-  //   const blob = new Blob([this.imageBuffer!], { type: 'image/webp' });
-  //   const url = URL.createObjectURL(blob);
-  //   return url;
-  // }
+  getObjectUrl() {
+    const blob = new Blob([this.imageBuffer!], { type: 'image/webp' });
+    const url = URL.createObjectURL(blob);
+    return url;
+  }
 
-  get imageData() {
-    const buffer = this.imageBuffer;
-    if (!buffer) return;
-    const imgBase64 = buffer.toString('base64');
-    return `data:image/webp;base64,${imgBase64}`;
+  dispose() {
+    this.room = '';
+    this.image = undefined;
+    this.toWeb = undefined;
+    this.toWindow = undefined;
   }
 }
 
