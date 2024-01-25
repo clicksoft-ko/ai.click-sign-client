@@ -3,7 +3,6 @@
 import RemoteSign from '@/components/(main)/remote-sign';
 import { useRemoteSignConnect } from '@/lib/hooks/use-remote-sign-connect';
 import { useSocketProvider } from '@/lib/hooks/use-socket-provider';
-import { useSocketStore } from '@/lib/stores/use-socket-store';
 
 interface Props {
   params: {
