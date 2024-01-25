@@ -51,15 +51,15 @@ const SignCanvas = React.forwardRef<SignConfirmProps, Props>(
       [handleConfirm]
     );
 
-    // useEffect(() => {
-    //   if (!isDrawing) return;
-    //   const timer = setInterval(() => {
-    //     handleSignChange();
-    //   }, 50);
-    //   return () => {
-    //     clearInterval(timer);
-    //   };
-    // }, [handleSignChange, isDrawing]);
+    useEffect(() => {
+      if (!isDrawing) return;
+      const timer = setInterval(() => {
+        handleSignChange();
+      }, 50);
+      return () => {
+        clearInterval(timer);
+      };
+    }, [handleSignChange, isDrawing]);
 
     return (
       <div className='fixed bottom-1 left-1/2 mb-2 flex -translate-x-1/2 flex-col gap-1 rounded border border-solid border-blue-400 bg-blue-50 p-1 shadow-lg'>

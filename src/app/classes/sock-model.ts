@@ -23,7 +23,9 @@ export class SockModel implements ISock {
   get imageBuffer() {
     if (!this.image) return;
     const buffer = Buffer.from(this.image);
-    return Buffer.from(pako.ungzip(buffer));
+    return Buffer.from(buffer);
+    // const buffer = Buffer.from(this.image);
+    // return Buffer.from(pako.ungzip(buffer));
   }
 
   getObjectUrl() {
