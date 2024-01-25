@@ -81,45 +81,45 @@ export const useRemote = () => {
     [emit, setShowSign]
   );
 
-  useEffect(() => {
-    const canvasM = new Html2CanvasManager();
-    let timer: NodeJS.Timeout;
-    async function callTimer() {
-      if (isImageEmpty) {
-        abortController?.abort();
-        try {
-          const result = await emit({ toWindow: ToWindow.화면초기화 });
-          if (!result) clear();
-        } catch (error: any) {
-          console.error('Error during emit:', error.message);
-        }
-        return;
-      }
+  // useEffect(() => {
+  //   const canvasM = new Html2CanvasManager();
+  //   let timer: NodeJS.Timeout;
+  //   async function callTimer() {
+  //     if (isImageEmpty) {
+  //       abortController?.abort();
+  //       try {
+  //         const result = await emit({ toWindow: ToWindow.화면초기화 });
+  //         if (!result) clear();
+  //       } catch (error: any) {
+  //         console.error('Error during emit:', error.message);
+  //       }
+  //       return;
+  //     }
 
-      abortController = new AbortController();
-      timer = setInterval(async () => {
-        try {
-          const buffer = await canvasM.getBuffer(
-            mainRef.current!,
-            abortController.signal
-          );
+  //     abortController = new AbortController();
+  //     timer = setInterval(async () => {
+  //       try {
+  //         const buffer = await canvasM.getBuffer(
+  //           mainRef.current!,
+  //           abortController.signal
+  //         );
 
-          if (buffer) {
-            const result = await emit({ buffer, toWindow: ToWindow.화면공유 });
-            if (!result) clear();
-          }
-        } catch (error: any) {
-          console.error('Error during getBuffer or emit:', error.message);
-        }
-      }, 500);
-    }
+  //         if (buffer) {
+  //           const result = await emit({ buffer, toWindow: ToWindow.화면공유 });
+  //           if (!result) clear();
+  //         }
+  //       } catch (error: any) {
+  //         console.error('Error during getBuffer or emit:', error.message);
+  //       }
+  //     }, 500);
+  //   }
 
-    callTimer().catch((error: any) => console.log(error.message));
+  //   callTimer().catch((error: any) => console.log(error.message));
 
-    return () => {
-      if (timer) clearInterval(timer);
-    };
-  }, [emit, isImageEmpty]);
+  //   return () => {
+  //     if (timer) clearInterval(timer);
+  //   };
+  // }, [emit, isImageEmpty]);
 
   return {
     imageSrc,
