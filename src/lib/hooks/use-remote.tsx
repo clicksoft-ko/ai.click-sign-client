@@ -18,11 +18,10 @@ export const useRemote = () => {
     const signal = abortController.signal;
     const handleInterval = async () => {
       const success = await emitPing();
-      if (signal.aborted) return;
-      if (success) return;
-
-      abortController.abort();
-      clearImageDataWithSign();
+      if (signal.aborted || !success) {
+        abortController.abort();
+        clearImageDataWithSign();
+      }
     };
 
     const timer = setInterval(handleInterval, 5000);
