@@ -37,11 +37,10 @@ export const useSocketHandler = () => {
   const emitSharing = useCallback(
     async (buffer?: Buffer) => {
       if (buffer) {
-        const result = await emit({ buffer, toWindow: ToWindow.화면공유 });
-        if (!result) clearImageDataWithSign();
+        return await emit({ buffer, toWindow: ToWindow.화면공유 });
       }
     },
-    [clearImageDataWithSign, emit]
+    [emit]
   );
 
   const emitClearSharing = useCallback(async () => {
