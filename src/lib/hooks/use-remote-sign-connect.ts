@@ -4,9 +4,10 @@ import { useSocketStore } from '../stores/use-socket-store';
 
 export const useRemoteSignConnect = (room: string) => {
   const [errorMessage, setErrorMessage] = useState<string>();
-  const { socket, setSocketPath } = useSocketStore();
+  const { connected, socket, setSocketPath } = useSocketStore();
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !connected) return;
+
     const socketPath = new SocketPathUtil(room);
     socket
       .timeout(10000)
@@ -22,10 +23,8 @@ export const useRemoteSignConnect = (room: string) => {
         setSocketPath(undefined);
       });
 
-    return () => {
-      // socket.emit('roomOut', socketPath.roomIn);
-    };
-  }, [room, socket, setSocketPath, setErrorMessage]);
+    return () => { };
+  }, [room, connected, socket, setSocketPath, setErrorMessage]);
 
   return { errorMessage };
 };
