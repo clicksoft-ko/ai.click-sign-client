@@ -49,6 +49,8 @@ export enum ToWeb {
   작성완료 = 4,
   화면공유 = 200,
   화면초기화 = 201,
+  윈도우접속에러 = 500,
+  PING = 1000,
 }
 
 export enum ToWindow {
@@ -56,4 +58,6 @@ export enum ToWindow {
   서명완료 = 1,
   화면공유 = 200,
   화면초기화 = 201,
+  웹접속에러 = 500,
+  PING = 1000,
 }

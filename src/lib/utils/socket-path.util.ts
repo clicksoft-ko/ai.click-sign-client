@@ -12,6 +12,10 @@ export class SocketPathUtil {
     return 'toWeb';
   }
 
+  static get leaveRoomEv() {
+    return 'leaveRoom';
+  }
+
   static get emitEv() {
     return 'fromWeb';
   }

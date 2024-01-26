@@ -7,9 +7,31 @@ import { useSocketHandler } from './use-socket-handler';
 export const useRemote = () => {
   const { clearImageDataWithSign } = useSocketStore();
   const { imageSrc, signRef } = useSocketReceive();
-  const { emitSharing, emitClearSharing } = useSocketHandler();
+  const { emitPing, emitSharing, emitClearSharing } = useSocketHandler();
   const mainRef = useRef(null);
   const isImageEmpty = !imageSrc || !mainRef.current;
+
+  useEffect(() => {
+    if (isImageEmpty) return;
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    const handleInterval = async () => {
+      const success = await emitPing();
+      if (signal.aborted) return;
+      if (success) return;
+
+      abortController.abort();
+      clearImageDataWithSign();
+    };
+
+    const timer = setInterval(handleInterval, 5000);
+
+    return () => {
+      abortController.abort();
+      clearInterval(timer);
+    };
+  }, [clearImageDataWithSign, emitPing, isImageEmpty]);
 
   useEffect(() => {
     let abortController: AbortController;
@@ -22,15 +44,19 @@ export const useRemote = () => {
         return;
       }
 
-      const canvasM = new Html2CanvasManager();
       abortController = new AbortController();
-      timer = setInterval(async () => {
+
+      const canvasM = new Html2CanvasManager();
+      const handleInterval = async () => {
         const buffer = await canvasM.getBuffer(
           mainRef.current!,
           abortController.signal
         );
         await emitSharing(buffer);
-      }, 1000);
+      };
+
+      await handleInterval();
+      timer = setInterval(handleInterval, 1000);
     }
 
     callTimer().catch((error: any) => clearImageDataWithSign());
@@ -39,7 +65,7 @@ export const useRemote = () => {
       abortController?.abort();
       if (timer) clearInterval(timer);
     };
-  }, [clearImageDataWithSign, isImageEmpty]);
+  }, [clearImageDataWithSign, emitClearSharing, emitSharing, isImageEmpty]);
 
   return {
     imageSrc,

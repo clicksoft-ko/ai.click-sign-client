@@ -1,28 +1,19 @@
+'use client';
 import React, { useRef } from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { useSocketStore } from '@/lib/stores/use-socket-store';
-import { SocketPathUtil } from '@/lib/utils/socket-path.util';
+import { useRouter } from 'next/navigation';
+import { paths } from '@/paths';
 
 export default function RemoteSignIn() {
-  const { socket, setSocketPath } = useSocketStore();
+  const { push } = useRouter();
   const roomRef = useRef<HTMLInputElement>(null);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     const room = roomRef.current?.value;
     if (!room) return;
 
-    const socketPath = new SocketPathUtil(room);
-    socket!
-      .timeout(10000)
-      .emitWithAck('roomIn', socketPath.roomIn)
-      .then((res) => {
-        if (res.errorMessage) throw new Error(res.errorMessage);
-        setSocketPath(socketPath);
-      })
-      .catch(() => {
-        setSocketPath(undefined);
-      });
+    push(paths.remote(room));
   }
 
   return (

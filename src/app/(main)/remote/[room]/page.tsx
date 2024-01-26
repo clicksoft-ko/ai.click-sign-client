@@ -10,7 +10,7 @@ interface Props {
   };
 }
 
-export default function MainPage({ params }: Props) {
+export default function RemoteRoomPage({ params }: Props) {
   useSocketProvider();
   const { errorMessage } = useRemoteSignConnect(params.room);
 

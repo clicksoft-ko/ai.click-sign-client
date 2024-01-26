@@ -8,11 +8,7 @@ export class Html2CanvasManager {
     return await Promise.race([
       html2canvas(element, { scale: 0.3 }),
       new Promise<object>((_, reject) => {
-        const abortHandler = () => reject('aborted');
-        signal.addEventListener('abort', abortHandler);
-        return () => {
-          return signal.removeEventListener('abort', abortHandler);
-        };
+        signal.addEventListener('abort', () => reject('aborted'));
       }),
     ]);
   }
