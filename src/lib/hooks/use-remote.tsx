@@ -53,6 +53,7 @@ export const useRemote = () => {
           mainRef.current!,
           abortController.signal
         );
+        if (abortController.signal.aborted) return;
         await emitSharing(buffer);
       };
 
