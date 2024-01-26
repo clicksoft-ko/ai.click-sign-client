@@ -18,6 +18,8 @@ export const useRemote = () => {
     const signal = abortController.signal;
     const handleInterval = async () => {
       const success = await emitPing();
+      console.log('signal.aborted', signal.aborted);
+      console.log('success', success);
       if (signal.aborted || !success) {
         abortController.abort();
         clearImageDataWithSign();

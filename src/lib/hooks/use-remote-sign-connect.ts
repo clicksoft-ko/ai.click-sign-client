@@ -23,7 +23,7 @@ export const useRemoteSignConnect = (room: string) => {
       });
 
     return () => {
-      socket.emit('roomOut', socketPath.roomIn);
+      // socket.emit('roomOut', socketPath.roomIn);
     };
   }, [room, socket, setSocketPath, setErrorMessage]);
 
