@@ -38,10 +38,10 @@ export const useRemote = () => {
     let abortController: AbortController;
     let timer: NodeJS.Timeout;
 
-    async function callTimer() {
+    function callTimer() {
       if (isImageEmpty) {
-        emitClearSharing();
         abortController?.abort();
+        emitClearSharing();
         return;
       }
 
@@ -58,15 +58,15 @@ export const useRemote = () => {
         await emitSharing(buffer);
       };
 
-      await handleInterval();
+      handleInterval();
       timer = setInterval(handleInterval, 1000);
     }
 
-    callTimer().catch((error: any) => clearImageDataWithSign());
+    callTimer();
 
     return () => {
       abortController?.abort();
-      if (timer) clearInterval(timer);
+      clearInterval(timer!);
     };
   }, [clearImageDataWithSign, emitClearSharing, emitSharing, isImageEmpty]);
 
