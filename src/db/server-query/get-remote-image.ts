@@ -3,7 +3,7 @@
 import { $Enums } from '@/prisma/client';
 import db from '../db';
 import path from 'path';
-import fs from 'fs/promises';
+import fs from 'fs';
 
 interface Args {
   ykiho: string;
@@ -33,7 +33,8 @@ export async function getRemoteBgImageBase64({ ykiho }: Args) {
 
   if (result?.path) {
     const imagePath = path.resolve(process.cwd(), `public${result.path}`);
-    return await fs.readFile(imagePath, 'base64');
+    if (fs.existsSync(imagePath))
+      return await fs.promises.readFile(imagePath, 'base64');
   }
 
   return;
