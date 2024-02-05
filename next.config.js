@@ -6,7 +6,7 @@ const nextConfig = {
     },
   },
   images: {
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 90,
   },
 };
 
