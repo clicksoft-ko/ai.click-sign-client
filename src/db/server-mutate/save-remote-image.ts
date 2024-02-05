@@ -11,7 +11,7 @@ interface SaveImageFileArgs {
 
 export async function saveImageFile({ ykiho, formData }: SaveImageFileArgs) {
   const file = formData.get('file');
-  if (file instanceof File) {
+  if (file instanceof Blob) {
     try {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
