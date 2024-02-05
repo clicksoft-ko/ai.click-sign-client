@@ -37,7 +37,7 @@ yarn-error.log*
 next-env.d.ts
 
 # image
-/public/remote-bg/*
-!/public/remote-bg/base.png
+/public/images/remote-bg/*
+!/public/images/remote-bg/base.png
 
 web.config
