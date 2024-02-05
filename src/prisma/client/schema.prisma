@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model RemoteBg {
+  id     Int        @id @default(autoincrement())
+  ykiho  String     @unique @db.VarChar(8)
+  bgType BgTypeEnum
+  path   String
+}
+
+enum BgTypeEnum {
+  IMAGE
+  VIDEO
+}

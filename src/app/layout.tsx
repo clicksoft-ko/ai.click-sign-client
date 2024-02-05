@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { fontSans } from '@/lib/fonts/font-sans';
+
+import Providers from '@/lib/providers/providers';
+import { notoSansKR } from '@/lib/fonts/fonts';
 
 export const metadata: Metadata = {
   title: '클릭소프트 윈도우 서명 연동',
@@ -17,11 +19,11 @@ export default function RootLayout({
     <html lang='en'>
       <body
         className={cn(
-          'bg-background min-h-screen font-sans antialiased',
-          fontSans.className
+          'min-h-screen bg-background font-sans antialiased',
+          notoSansKR.className
         )}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
