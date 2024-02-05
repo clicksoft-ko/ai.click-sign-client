@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     serverActions: {
-      allowedOrigins: [process.env.NEXT_PUBLIC_BACKEND_URL],
+      allowedOrigins: [process.env.NEXT_PUBLIC_DOMAIN],
     },
   },
   images: {
