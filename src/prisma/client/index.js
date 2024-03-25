@@ -118,7 +118,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "F:\\_web\\remote-sign-web\\src\\prisma\\client",
+      "value": "C:\\develops\\_web\\remote-sign-web\\src\\prisma\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -145,7 +145,7 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
