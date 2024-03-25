@@ -27,7 +27,11 @@ export default function RemoteSign({ ykiho }: Props) {
   }
 
   return (
-    <div className='h-full w-full overflow-hidden' ref={mainRef}>
+    <div
+      className='h-full w-full overflow-hidden'
+      ref={mainRef}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       {component}
       {showSign && <SignCanvas ref={signRef} />}
     </div>

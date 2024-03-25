@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function MainPage() {
   const [visibleImage, setVisibleImage] = useState(false);
   return (
-    <div onContextMenu={(e) => e.preventDefault()}>
+    <div>
       <Button onClick={() => setVisibleImage((prev) => !prev)}>
         이미지 토글
       </Button>
