@@ -69,7 +69,7 @@ const SignCanvas = React.forwardRef<SignConfirmProps, Props>(
     }, [handleSignChange, isDrawing]);
 
     return (
-      <div className='fixed bottom-1 left-1/2 mb-2 flex -translate-x-1/2 flex-col gap-1 rounded border border-solid border-blue-400 bg-blue-50 p-1 shadow-lg'>
+      <div className='fixed bottom-32 left-1/2 mb-2 flex -translate-x-1/2 flex-col gap-1 rounded border border-solid border-blue-400 bg-blue-50 p-1 shadow-lg'>
         <div className='flex items-center justify-between'>
           <span className='p-2 text-lg font-bold text-blue-800'>
             서명해주세요.
