@@ -90,6 +90,7 @@ const SignCanvas = React.forwardRef<SignConfirmProps, Props>(
         <SignatureCanvas
           minWidth={3}
           maxWidth={5}
+          minDistance={1}
           onBegin={handleBeginSign}
           onEnd={handleEndSign}
           ref={signRef}
