@@ -117,7 +117,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\develops\\_web\\remote-sign-web\\src\\prisma\\client",
+      "value": "C:\\Web\\click-sign-client\\src\\prisma\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -134,8 +134,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "5.9.1",
@@ -153,8 +152,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "Ly8gVGhpcyBpcyB5b3VyIFByaXNtYSBzY2hlbWEgZmlsZSwKLy8gbGVhcm4gbW9yZSBhYm91dCBpdCBpbiB0aGUgZG9jczogaHR0cHM6Ly9wcmlzLmx5L2QvcHJpc21hLXNjaGVtYQoKZ2VuZXJhdG9yIGNsaWVudCB7CiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyIKICBvdXRwdXQgICA9ICIuLi9zcmMvcHJpc21hL2NsaWVudCIKfQoKZGF0YXNvdXJjZSBkYiB7CiAgcHJvdmlkZXIgPSAibXlzcWwiCiAgdXJsICAgICAgPSBlbnYoIkRBVEFCQVNFX1VSTCIpCn0KCm1vZGVsIFJlbW90ZUJnIHsKICBpZCAgICAgSW50ICAgICAgICBAaWQgQGRlZmF1bHQoYXV0b2luY3JlbWVudCgpKQogIHlraWhvICBTdHJpbmcgICAgIEB1bmlxdWUgQGRiLlZhckNoYXIoOCkKICBiZ1R5cGUgQmdUeXBlRW51bQogIHBhdGggICBTdHJpbmcKfQoKZW51bSBCZ1R5cGVFbnVtIHsKICBJTUFHRQogIFZJREVPCn0K",
-  "inlineSchemaHash": "fba9ced24c502b44fe23a4ab8ae1a1b0bc392eb532c0cf17ae42e046e1bcc612",
+  "inlineSchema": "Ly8gVGhpcyBpcyB5b3VyIFByaXNtYSBzY2hlbWEgZmlsZSwNCi8vIGxlYXJuIG1vcmUgYWJvdXQgaXQgaW4gdGhlIGRvY3M6IGh0dHBzOi8vcHJpcy5seS9kL3ByaXNtYS1zY2hlbWENCg0KZ2VuZXJhdG9yIGNsaWVudCB7DQogIHByb3ZpZGVyID0gInByaXNtYS1jbGllbnQtanMiDQogIG91dHB1dCAgID0gIi4uL3NyYy9wcmlzbWEvY2xpZW50Ig0KfQ0KDQpkYXRhc291cmNlIGRiIHsNCiAgcHJvdmlkZXIgPSAibXlzcWwiDQogIHVybCAgICAgID0gZW52KCJEQVRBQkFTRV9VUkwiKQ0KfQ0KDQptb2RlbCBSZW1vdGVCZyB7DQogIGlkICAgICBJbnQgICAgICAgIEBpZCBAZGVmYXVsdChhdXRvaW5jcmVtZW50KCkpDQogIHlraWhvICBTdHJpbmcgICAgIEB1bmlxdWUgQGRiLlZhckNoYXIoOCkNCiAgYmdUeXBlIEJnVHlwZUVudW0NCiAgcGF0aCAgIFN0cmluZw0KfQ0KDQplbnVtIEJnVHlwZUVudW0gew0KICBJTUFHRQ0KICBWSURFTw0KfQ0K",
+  "inlineSchemaHash": "c11ba5cf840c11d16735a7cce09757476da0d7e857e43ce6d420c57cf8e33444",
   "noEngine": false
 }
 config.dirname = '/'
