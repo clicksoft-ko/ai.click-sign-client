@@ -8,15 +8,13 @@ RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
 COPY . .
 
-# ENV NODE_ENV production
-# ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+RUN npx prisma generate
 
-# CMD ["npm", "run", "tb"]
-
-EXPOSE 3020
-ENV PORT 3020
+EXPOSE 3001
+ENV PORT 3001
 RUN npm run build
 CMD [ "npm", "run", "start" ]
+
 
 
 # FROM node:20-alpine AS base
