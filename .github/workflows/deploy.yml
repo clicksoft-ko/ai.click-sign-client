@@ -22,3 +22,23 @@ jobs:
           context: .
           push: true
           tags: kaburi/click-sign-client:latest, kaburi/click-sign-client:${{ github.run_number }}         
+
+      - name: Checkout click-helms repository
+        uses: actions/checkout@v3
+        with:
+          repository: KaburiCoder/click-helms
+          token: ${{ secrets.CLICK_HELMS_REPO_TOKEN }} # GitHub 토큰
+          path: .
+          ref: main # 기본 브랜치를 명시적으로 지정 (main이 기본 브랜치일 경우)
+
+      - name: Update YAML file
+        run: |
+          sed -i '/client:/,/service:/s/version: ".*"/version: "${{ github.run_number }}"/' click-sign/values.yaml
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "${{ secrets.USER_NAME }}"
+          git config --global user.email "${{ secrets.USER_EMAIL }}"
+          git add click-sign/values.yaml
+          git commit -m "Update version to ${{ github.run_number }}"
+          git push
