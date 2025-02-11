@@ -1,7 +1,7 @@
 FROM node:20-alpine  
 
 # OpenSSL 설치
-RUN apk add openssl
+RUN apk add --no-cache openssl
 
 WORKDIR /app
 
