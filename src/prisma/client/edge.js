@@ -117,7 +117,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Web\\click-sign-client\\src\\prisma\\client",
+      "value": "C:\\WebClick\\click-sign-client\\src\\prisma\\client",
       "fromEnvVar": null
     },
     "config": {
