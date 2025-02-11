@@ -1,7 +1,7 @@
-FROM node:20-slim  
+FROM node:20-alpine  
 
 # OpenSSL 설치
-RUN apt-get update && apt-get install -y openssl libssl3 && rm -rf /var/lib/apt/lists/*
+RUN apk add openssl
 
 WORKDIR /app
 
